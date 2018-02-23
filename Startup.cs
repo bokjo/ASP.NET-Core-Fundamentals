@@ -18,6 +18,7 @@ namespace ASP.NET_Core_Fundamentals
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,9 +50,9 @@ namespace ASP.NET_Core_Fundamentals
             //     Path="/welcome"
             // });
 
-            // app.UseFileServer();
-            app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) =>
             {
@@ -60,7 +61,6 @@ namespace ASP.NET_Core_Fundamentals
                 var greeting = greeter.GetMessageOfTheDay();
                 await context.Response.WriteAsync(greeting);
 
-                // TEST PUSH TO GITHUB ERROR HMMMMM
             });
         }
     }
