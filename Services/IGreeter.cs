@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace ASP.NET_Core_Fundamentals
+namespace ASP.NET_Core_Fundamentals.Services
 {
     public interface IGreeter
     {

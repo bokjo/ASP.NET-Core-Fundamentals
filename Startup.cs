@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ASP.NET_Core_Fundamentals.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -18,6 +20,7 @@ namespace ASP.NET_Core_Fundamentals
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();
+            services.AddScoped<IRestaurantData, MockupRestaurantData>();
             services.AddMvc();
         }
 
@@ -52,7 +55,9 @@ namespace ASP.NET_Core_Fundamentals
 
             app.UseStaticFiles();
 
-            app.UseMvcWithDefaultRoute();
+            //app.UseMvcWithDefaultRoute();
+            app.UseMvc(configureRoutes);
+
 
             app.Run(async (context) =>
             {
@@ -62,6 +67,14 @@ namespace ASP.NET_Core_Fundamentals
                 await context.Response.WriteAsync(greeting);
 
             });
+        }
+
+        private void configureRoutes(IRouteBuilder routeBuilder)
+        {
+            // /Home/Index
+
+            routeBuilder.MapRoute("Default",  
+                                  "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }
