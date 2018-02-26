@@ -39,5 +39,24 @@ namespace ASP.NET_Core_Fundamentals.Controllers
             return View("Details", model);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+         public IActionResult Create(RestaurantEditModel model)
+        {
+            var newRestaurant = new Restaurant();
+            newRestaurant.Name = model.Name;
+            newRestaurant.Cuisine = model.Cuisine;
+
+            newRestaurant = _restaurantData.AddRestaurant(newRestaurant);
+
+            return View("Details", newRestaurant);
+        }
+
     }    
 }

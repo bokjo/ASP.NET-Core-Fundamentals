@@ -20,7 +20,8 @@ namespace ASP.NET_Core_Fundamentals
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();
-            services.AddScoped<IRestaurantData, MockupRestaurantData>();
+            //services.AddScoped<IRestaurantData, MockupRestaurantData>();
+            services.AddSingleton<IRestaurantData, MockupRestaurantData>();
             services.AddMvc();
         }
 

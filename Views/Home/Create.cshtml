@@ -1,0 +1,12 @@
+@using ASP.NET_Core_Fundamentals.Models
+@model Restaurant
+
+<h1>Create new restaurant</h1>
+<form method="POST">
+    <input asp-for="Name" />
+    <select asp-for="Cuisine" 
+            asp-items="@Html.GetEnumSelectList<CuisineType>()">
+    </select>
+    <input type="submit" name="save" value="Save" />
+</form>
+<a asp-action="Index" asp-controller="Home">Back</a>
