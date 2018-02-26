@@ -25,6 +25,11 @@ namespace ASP.NET_Core_Fundamentals.Services
             return _restaurants.OrderBy(r => r.Id);
         }
 
+        public Restaurant GetRestaurant(int id)
+        {
+            return _restaurants.FirstOrDefault(r => r.Id == id);
+        }
+
         List<Restaurant> _restaurants;
 
     }

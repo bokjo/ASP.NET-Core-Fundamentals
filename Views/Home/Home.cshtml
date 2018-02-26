@@ -1,4 +1,4 @@
-@model IEnumerable<ASP.NET_Core_Fundamentals.Models.Restaurant>
+@model ASP.NET_Core_Fundamentals.ViewModels.HomeIndexViewModel
 
 <html lang="en">
 <head>
@@ -8,12 +8,18 @@
     <title>Home</title>
 </head>
 <body>
+    <h1>Message of the day: @Model.CurrentMessage</h1>
     <table>
-        @foreach (var restaurant in Model)
+        @foreach (var restaurant in Model.Restaurants)
         {
         <tr>
             <td>@restaurant.Id</td>
             <td>@restaurant.Name</td>
+            <td>
+                <a href="/home/details/@restaurant.Id">Details...</a>
+                @Html.ActionLink("Go", "Details", new { id = restaurant.Id })
+                <a asp-action="Details" asp-route-id="@restaurant.Id">New - More</a>
+            </td>
         </tr>
         }
     </table>
