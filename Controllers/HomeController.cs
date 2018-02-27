@@ -55,7 +55,8 @@ namespace ASP.NET_Core_Fundamentals.Controllers
 
             newRestaurant = _restaurantData.AddRestaurant(newRestaurant);
 
-            return View("Details", newRestaurant);
+            // return View("Details", newRestaurant);
+            return RedirectToAction(nameof(Details), new { id = newRestaurant.Id});    
         }
 
     }    
