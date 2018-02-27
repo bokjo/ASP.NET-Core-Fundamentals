@@ -3,7 +3,7 @@ using ASP.NET_Core_Fundamentals.Services;
 using ASP.NET_Core_Fundamentals.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ASP.NET_Core_Fundamentals.Controllers 
+namespace ASP.NET_Core_Fundamentals.Controllers
 {
     public class HomeController : Controller
     {
@@ -17,21 +17,21 @@ namespace ASP.NET_Core_Fundamentals.Controllers
         }
         public IActionResult Index()
         {
-           // return Content("Hello from the Home Controller!");      
+            // return Content("Hello from the Home Controller!");      
 
-           // var model = _restaurantData.GetAll();
-           var model = new HomeIndexViewModel();
-           model.Restaurants = _restaurantData.GetAll();
-           model.CurrentMessage = _greeting.GetMessageOfTheDay();
+            // var model = _restaurantData.GetAll();
+            var model = new HomeIndexViewModel();
+            model.Restaurants = _restaurantData.GetAll();
+            model.CurrentMessage = _greeting.GetMessageOfTheDay();
 
-           return View("Home", model);
+            return View("Home", model);
         }
 
-        public IActionResult Details(int id) 
+        public IActionResult Details(int id)
         {
             var model = _restaurantData.GetRestaurant(id);
 
-            if( model == null) 
+            if (model == null)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -47,17 +47,25 @@ namespace ASP.NET_Core_Fundamentals.Controllers
         }
 
         [HttpPost]
-         public IActionResult Create(RestaurantEditModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(RestaurantEditModel model)
         {
-            var newRestaurant = new Restaurant();
-            newRestaurant.Name = model.Name;
-            newRestaurant.Cuisine = model.Cuisine;
+            if (ModelState.IsValid)
+            {
+                var newRestaurant = new Restaurant();
+                newRestaurant.Name = model.Name;
+                newRestaurant.Cuisine = model.Cuisine;
 
-            newRestaurant = _restaurantData.AddRestaurant(newRestaurant);
+                newRestaurant = _restaurantData.AddRestaurant(newRestaurant);
 
-            // return View("Details", newRestaurant);
-            return RedirectToAction(nameof(Details), new { id = newRestaurant.Id});    
+                // return View("Details", newRestaurant);
+                return RedirectToAction(nameof(Details), new { id = newRestaurant.Id });
+            }
+            else
+            {
+                return View();
+            }
         }
 
-    }    
+    }
 }
