@@ -8,5 +8,6 @@ namespace ASP.NET_Core_Fundamentals.Services
        IEnumerable<Restaurant> GetAll();
         Restaurant GetRestaurant(int id);
         Restaurant AddRestaurant(Restaurant newRestaurant);
+        Restaurant UpdateRestaurant(Restaurant updateRestaurant);
     }
 }

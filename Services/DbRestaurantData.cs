@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ASP.NET_Core_Fundamentals.Data;
 using ASP.NET_Core_Fundamentals.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ASP.NET_Core_Fundamentals.Services
 {
@@ -29,6 +30,14 @@ namespace ASP.NET_Core_Fundamentals.Services
         public Restaurant GetRestaurant(int id)
         {
             return _context.Restaurants.FirstOrDefault(r => r.Id == id);
+        }
+
+        public Restaurant UpdateRestaurant(Restaurant updateRestaurant)
+        {
+            _context.Attach(updateRestaurant).State = EntityState.Modified; 
+            _context.SaveChanges();
+            
+            return updateRestaurant;
         }
     }
 }

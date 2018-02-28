@@ -38,6 +38,12 @@ namespace ASP.NET_Core_Fundamentals.Services
             return newRestaurant;
         }
 
+        public Restaurant UpdateRestaurant(Restaurant updateRestaurant)
+        {
+            // UPDATE RESTAURANT CODE GOES HERE...
+            return updateRestaurant;
+        }
+
         List<Restaurant> _restaurants;
 
     }
