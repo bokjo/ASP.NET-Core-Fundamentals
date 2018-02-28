@@ -1,0 +1,12 @@
+@page "{name}"
+
+@model GreetingModel
+
+@{
+    ViewBag.Title = $"Greeting from Razor: {Model.UrlParamName}";
+}
+
+<div>
+    <h3>Hello from Razor Greeting Page!</h3>
+    <p>@Model.CurrentGreeting</p>
+</div>
