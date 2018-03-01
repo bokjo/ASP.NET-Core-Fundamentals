@@ -7,13 +7,42 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">OdeToFood</a>
+            </div>
+            <div class="navbar-right">
+                @await  Component.InvokeAsync("LoginLogout")
+                @*<vc:login-logout></vc:login-logout>*@       
+            </div>
+        </div>
+    </nav>
+
     <div>
         @RenderBody()
     </div>
     <footer>
         @RenderSection("footer", required: false)
         @await Component.InvokeAsync("Greeter")
-        @*<vc:greeter></vc:greeter>*@ 
+        @*<vc:greeter></vc:greeter>*@
+        @if (User.Identity.IsAuthenticated)
+        {
+            @foreach (var identity in User.Identities)
+            {
+                <h3>@identity.Name</h3>
+                <ui>
+                    @foreach (var claim in identity.Claims)
+                    {
+                        <li>@claim.Type - @claim.Value</li>
+                    }
+                </ui>
+            }
+        }
+        else
+        {
+            <div>You are anonimous!</div>
+        }
     </footer>
 </body>
 </html>
