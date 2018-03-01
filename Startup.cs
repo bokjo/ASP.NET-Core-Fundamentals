@@ -4,9 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASP.NET_Core_Fundamentals.Data;
 using ASP.NET_Core_Fundamentals.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,8 +30,20 @@ namespace ASP.NET_Core_Fundamentals
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddOpenIdConnect(options => 
+            {
+                _config.Bind("AzureAd", options);
+            })
+            .AddCookie();
+
             services.AddSingleton<IGreeter, Greeter>();
             services.AddDbContext<DataDbContext>(options => options.UseSqlServer(_config.GetConnectionString("OdeToFood")));
+
             //services.AddScoped<IRestaurantData, MockupRestaurantData>();
             services.AddScoped<IRestaurantData, DbRestaurantData>();
             services.AddMvc();
@@ -63,7 +78,11 @@ namespace ASP.NET_Core_Fundamentals
             //     Path="/welcome"
             // });
 
+            app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
+
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             //app.UseMvcWithDefaultRoute();
             app.UseMvc(configureRoutes);
@@ -82,7 +101,6 @@ namespace ASP.NET_Core_Fundamentals
         private void configureRoutes(IRouteBuilder routeBuilder)
         {
             // /Home/Index
-
             routeBuilder.MapRoute("Default",  
                                   "{controller=Home}/{action=Index}/{id?}");
         }

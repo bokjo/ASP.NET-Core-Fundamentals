@@ -1,10 +1,12 @@
 using ASP.NET_Core_Fundamentals.Models;
 using ASP.NET_Core_Fundamentals.Services;
 using ASP.NET_Core_Fundamentals.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASP.NET_Core_Fundamentals.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private IRestaurantData _restaurantData;
@@ -15,10 +17,10 @@ namespace ASP.NET_Core_Fundamentals.Controllers
             _restaurantData = restaurantData;
             _greeting = greeting;
         }
-        public IActionResult Index()
-        {
-            // return Content("Hello from the Home Controller!");      
 
+        [AllowAnonymous]
+        public IActionResult Index()
+        {    
             // var model = _restaurantData.GetAll();
             var model = new HomeIndexViewModel();
             model.Restaurants = _restaurantData.GetAll();
@@ -42,7 +44,6 @@ namespace ASP.NET_Core_Fundamentals.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-
             return View();
         }
 

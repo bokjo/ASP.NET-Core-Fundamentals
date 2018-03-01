@@ -1,10 +1,12 @@
 using ASP.NET_Core_Fundamentals.Models;
 using ASP.NET_Core_Fundamentals.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ASP.NET_Core_Fundamentals.Pages.Restaurants
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private IRestaurantData _restaurantData;
