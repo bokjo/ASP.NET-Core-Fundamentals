@@ -4,14 +4,15 @@
     ViewBag.Title = "Home";
 }
 
-<h1>All Restaurants</h1>
+<h1 class="d-flex justify-content-center">All Restaurants</h1>
 
 @foreach (var restaurant in Model.Restaurants)
 {
     @Html.Partial("_Summary", restaurant)
-    <hr />
+    <br />
 }
 
 <div>
-    <a asp-action="Create">Add Restaurant</a>
+    <a class="btn btn-primary btn-block"
+       asp-action="Create">Add Restaurant</a>
 </div>

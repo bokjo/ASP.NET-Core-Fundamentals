@@ -5,20 +5,24 @@
 }
 
 <h1>Create new restaurant</h1>
-<form method="POST">
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
+<form class="form-horizontal" method="POST">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control"/>
         <span asp-validation-for="Name"></span>
     </div>
-    <div>
-        <label asp-for="Cuisine"></label>
+    <div class="form-group">
+        <label asp-for="Cuisine" class="control-label"></label>
         <select asp-for="Cuisine" 
-                asp-items="@Html.GetEnumSelectList<CuisineType>()">
+                asp-items="@Html.GetEnumSelectList<CuisineType>()"
+                class="form-control">
         </select>
         <span asp-validation-for="Cuisine"></span>
     </div>
-    <input type="submit" name="save" value="Save" />
+    <input type="submit" name="save" value="Save" class="btn btn-primary btn-block" />
 <div asp-validation-summary="ModelOnly"></div>
 </form>
-<a asp-action="Index" asp-controller="Home">Back</a>
+
+<br />
+<hr />
+<a asp-action="Index" asp-controller="Home" class="btn btn-primary">Back</a>

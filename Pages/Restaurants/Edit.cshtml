@@ -9,19 +9,20 @@
 <h1>Edit @Model.Restaurant.Name</h1>       
 
 <form method="POST">
-    <input type="hidden" asp-for="Restaurant.Id"/>
-    <div>
+    <input type="hidden" asp-for="Restaurant.Id" />
+    <div class="form-group">
         <label asp-for="Restaurant.Name"></label>
-        <input asp-for="Restaurant.Name" />
+        <input asp-for="Restaurant.Name" class="form-control" />
         <span asp-validation-for="Restaurant.Name"></span>
     </div>
-    <div>
+    <div class="form-group">
         <label asp-for="Restaurant.Cuisine"></label>
-        <select asp-for="Restaurant.Cuisine" 
-                asp-items="@Html.GetEnumSelectList<CuisineType>()">
-        </select>
+        <select asp-for="Restaurant.Cuisine"
+                asp-items="@Html.GetEnumSelectList<CuisineType>()"
+                class="form-control"></select>
         <span asp-validation-for="Restaurant.Cuisine"></span>
     </div>
-    <input type="submit" name="save" value="Save" />
-<div asp-validation-summary="ModelOnly"></div>
+    <button type="submit" name="save" class="btn btn-primary col-md-3">Save</button>
+    <button asp-controller="Home" asp-action="Index" class="btn btn-primary col-md-3">Cancel</button>
+    @*<div asp-validation-summary="ModelOnly"></div>*@
 </form>
