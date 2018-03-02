@@ -13,7 +13,7 @@ namespace ASP.NET_Core_Fundamentals.Controllers
     {
         public IActionResult Login()
         {
-            var redirectUrl = Url.Page("/Index");
+            var redirectUrl = Url.Action("Index", "Home");
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
                 CookieAuthenticationDefaults.AuthenticationScheme,
